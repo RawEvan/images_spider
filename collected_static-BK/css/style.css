@@ -254,7 +254,7 @@ display: inline-block;
         position: relative;
 }
 .banner-info{
-    background: url(../images/banner-in.jpg)no-repeat 0px 0px;
+    background: url(../images/banner-in.png)no-repeat 150px 0px;
     width: 500px;
     height: 400px;
     margin: 17.5% auto 0;
