@@ -20,7 +20,17 @@ def findUrl2(html):
     return url2lstfltr 
  #获取html文本
 def getHtml(url):
-    html = urllib2.urlopen(url).read().decode('gbk')#解码为utf-8
+    html = ''
+    try:
+        html = urllib2.urlopen(url).read().decode('gbk')#解码为gbk
+    except:
+        pass
+    try:
+        html = urllib2.urlopen(url).read().decode('utf-8')#解码为gutf-8
+    except:
+        pass
+    if html == '':
+        html = '/static/images/404-luotianyi.jpg'
     return html 
  #下载图片到本地
 def download(html_page , pageNo):   

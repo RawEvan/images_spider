@@ -1,7 +1,15 @@
 {% extends 'album_base.html'%}
+
+{% block title %}
+<title>{{site}}</title>
+{% endblock %}
+
 {% block photos %}
-<p> site: www.meizitu.com </p>
 {% for photo in photo_list %}
 <a href="{{photo}}"><img src="{{photo}}"></a>
 {% endfor %}
+{% endblock %}
+
+{% block site %}
+<p>site: {{site}}</p>
 {% endblock %}
