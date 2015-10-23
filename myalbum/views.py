@@ -31,5 +31,6 @@ def myalbum(request):
             return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list, 'site': site})
     else :          # when not POST
         form = siteForm()
+        site = 'http://www.meizitu.com'
         photo_list = getUrl.getImgList('http://www.meizitu.com')
     return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list, 'site': site})
