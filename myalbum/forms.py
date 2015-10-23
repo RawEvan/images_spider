@@ -1,4 +1,5 @@
+# -*- coding: utf-8 -*-
 from django import forms
 
 class siteForm(forms.Form):
-    site = forms.CharField()
+    site = forms.CharField(label = '网址 ', initial = 'image.baidu.com')

@@ -15,18 +15,19 @@
 <body style="">
 <!-- 代码 开始 -->
 <p>evan's album</p>
-<div class="baguetteBoxOne gallery">
-
-<form  method = "POST">
-{% csrf_token %}
-{{form}}
-<input type = "submit" value = "提交">
-</form>
 
 {% block site %}
 		<p>site: www.meizitu.com</p>
 {% endblock %}
 
+<div class="baguetteBoxOne gallery">
+
+<form  method = "POST">
+{% csrf_token %}
+{{form}}
+<input type = "submit" value = "Go">
+</form>
+<p>  </p>
 {% block photos %}<!--这部分由后台控制生成，以下为默认显示-->
         <a href="/static/images/1-1.jpg" data-caption="Golden Gate Bridge"><img src="/static/images/thumbs/1-1.jpg"></a>
         <a href="/static/images/1-2.jpg" title="Midnight City"><img src="/static/images/thumbs/1-2.jpg"></a>
@@ -45,7 +46,7 @@ baguetteBox.run('.baguetteBoxOne', {
 </script>
 <!-- 代码 结束 -->
 <div style="text-align:center;margin:50px 0">
-<p>来源：<a href="https://github.com/feimosi/baguetteBox.js" target="_blank">github</a>　代码整理：<a href="http://www.lanrentuku.com/" target="_blank">懒人图库</a>　感谢：<a href="http://blog.hexccc.com/service/" target="_blank">wordpress Xcoder</a></p>
+<p>css/js 来源：<a href="https://github.com/feimosi/baguetteBox.js" target="_blank">github</a>　代码整理：<a href="http://www.lanrentuku.com/" target="_blank">懒人图库</a>　感谢：<a href="http://blog.hexccc.com/service/" target="_blank">wordpress Xcoder</a></p>
 </div>
 </body>
 </html>

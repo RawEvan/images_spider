@@ -28,8 +28,8 @@ def myalbum(request):
             site = form.cleaned_data['site']
             site = addHead(site)  # add http head if don't have
             photo_list = getUrl.getImgList(site)
-            return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list})
+            return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list, 'site': site})
     else :          # when not POST
         form = siteForm()
         photo_list = getUrl.getImgList('http://www.meizitu.com')
-    return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list})
+    return render(request, u'myalbum.html', {'form': form, 'photo_list': photo_list, 'site': site})
