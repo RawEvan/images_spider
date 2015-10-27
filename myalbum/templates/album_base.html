@@ -4,13 +4,24 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="相册,evann,图片,图片浏览" />
 <meta name="description" content="由evann制作的网页图片批量查看工具~" />
+<title>
 {% block title %}
-<title>evan's album</title>
+evan's album
 {% endblock %}
+</title>
+<!--
+old css and js
 <link rel="stylesheet" href="/static/css/baguettebox.min.css">
-<link rel="shortcut icon" href="favicon.ico" >
 <link rel="stylesheet" href="/static/css/lrtk.css">
 <script src="/static/js/baguettebox.min.js"></script>
+http://lib.sinaapp.com/js/bootstrap/3.0.0/js/bootstrap.js
+-->
+
+<link rel="stylesheet" href="/static/css/baguettebox.min.css">
+<link rel="stylesheet" href="/static/css/lrtk.css">
+<script src="/static/js/baguettebox.min.js"></script>
+
+<link rel="shortcut icon" href="favicon.ico" >
 </head>
 <body style="">
 <!-- 代码 开始 -->
@@ -19,7 +30,9 @@
 {% block site %}
 		<p>site: www.meizitu.com</p>
 {% endblock %}
-
+<div margin-left: auto, margin-right:auto >
+<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
+</div>
 <div class="baguetteBoxOne gallery">
 
 <form  method = "POST">
@@ -44,7 +57,6 @@ baguetteBox.run('.baguetteBoxOne', {
     animation: 'fadeIn',
 });
 </script>
-<script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script>
 <!-- 代码 结束 -->
 <div style="text-align:center;margin:50px 0">
 <p>css/js 来源：<a href="https://github.com/feimosi/baguetteBox.js" target="_blank">github</a>　代码整理：<a href="http://www.lanrentuku.com/" target="_blank">懒人图库</a>　感谢：<a href="http://blog.hexccc.com/service/" target="_blank">wordpress Xcoder</a></p>

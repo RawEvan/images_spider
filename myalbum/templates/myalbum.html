@@ -1,15 +1,22 @@
-{% extends 'album_base.html'%}
+﻿{% extends 'index.html'%}
 
-{% block title %}
-<title>evan's album</title>
-{% endblock %}
-
-{% block photos %}
-{% for photo in photo_list %}
-<a href="{{photo}}"><img src="{{photo}}"></a>
+{% block thumb %}
+{% for key,value in photo_list.items %}
+	<li class="item"><a href="/url/{{value}}"><img src="{{key}}" alt="" /></a></li>
 {% endfor %}
 {% endblock %}
 
-{% block site %}
-		<p>site: {{site}}</p>
+{% block photos %}
+{% for key,value in photo_list.items%}
+	<li class="item--big">
+        <a href="/url/{{value}}">
+          <figure>
+            <img src="{{key}}" alt="" />
+            <figcaption class="img-caption">
+              Caption
+            </figcaption>
+          </figure>
+          </a>
+      </li>
+{% endfor %}
 {% endblock %}

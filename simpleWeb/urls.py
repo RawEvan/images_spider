@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^add/$', 'calc.views.add', name = 'add'),
     url(r'^add/(\d+)/(\d+)/$', 'calc.views.add2', name = 'add2'),
     url(r'^$', 'myalbum.views.myalbum', name = 'myalbum'),
+    url(r'^url/(.+)/$', 'myalbum.views.myalbum_geturl', name = 'myalbum'),
 ]

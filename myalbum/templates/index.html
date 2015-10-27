@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<meta name="keywords" content="evan, 相册, sae, 图片浏览" />
+<meta name="description" content="evan 的在线图片浏览工具" />
+<link rel="shortcut icon" href="favicon.ico" >
+<title>evan's album</title>
+
+<link rel="stylesheet" href="/static/css/lrtk.css" />
+<script src="/static/js/jquery-1.8.2.min.js"></script>
+<script src="/static/js/plugins.js"></script>
+<script src="/static/js/scripts.js"></script>
+
+</head>
+<body>
+<!-- 代码 开始 -->
+<p>evan's album</p>
+<form  method = "POST">
+{% csrf_token %}
+{{form}}
+<input type = "submit" value = "Go">
+</form>
+
+  <div id="gallery-container">
+    
+    <ul class="items--small">
+	{% block thumb %}
+      <li class="item"><a href="#"><img src="images/small-1.png" alt="" /></a></li>
+	{% endblock %}
+    </ul>
+    <ul class="items--big">
+	{% block photos %}
+      <li class="item--big">
+        <a href="#">
+          <figure>
+            <img src="images/big-1.jpg" alt="" />
+            <figcaption class="img-caption">
+              Caption
+            </figcaption>
+          </figure>
+          </a>
+      </li>
+	  {% endblock %}
+    </ul>
+    <div class="controls">
+      <span class="control icon-arrow-left" data-direction="previous"></span> 
+      <span class="control icon-arrow-right" data-direction="next"></span> 
+      <span class="grid icon-grid"></span>
+      <span class="fs-toggle icon-fullscreen"></span>
+    </div>
+    
+  </div>
+  
+
+<script>
+    $(document).ready(function(){
+     $('#gallery-container').sGallery({
+        fullScreenEnabled: true
+      });
+    });
+</script>
+<!-- 代码 结束 -->
+<div style="text-align:center;margin:30px 0">
+<p>来源：<a href="https://github.com/SaraSoueidan/s-gallery" target="_blank">s-gallery</a>　代码整理：<a href="http://www.lanrentuku.com/" target="_blank">懒人图库</a>　感谢：<a href="http://blog.hexccc.com" target="_blank">wordpress Xcoder</a></p>
+<p>＊尊重他人劳动成果，转载请自觉注明出处！注：此代码仅供学习交流，请勿用于商业用途。</p>
+<p></p>
+<p style="margin:20px 0"></p>
+</div>
+</body>
+</html>
