@@ -72,9 +72,11 @@ def urlClean(url):
     '''
     
     if 'www' not in url:
-        url = 'www.' + url
         if 'http' not in url:
+            url = 'www.' + url
             url = 'http://' + url
+        
+            
             
     return url
 
@@ -84,13 +86,13 @@ def getHtml(url = 'http://www.meizitu.com'):
     data = urllib2.urlopen(req).read()
     charset = getCharset(data)
     # don't know why it needn't to be decoded - -
-    '''
+    
     try:
         data = data.decode(charset)
     except:
         print 'decode error'
     print data
-    '''
+    
     return data
     
 if __name__ == "__main__":

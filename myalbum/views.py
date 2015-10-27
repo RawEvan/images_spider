@@ -29,8 +29,18 @@ def myalbum(request):
                                              'site': site})
 
 def myalbum_geturl(request, url):
-    form = siteForm()
-    photo_list = getUrl.getImgList(url) 
+    if request.method == 'POST':        # when POST
+        form = siteForm(request.POST)
+
+        if form.is_valid():
+            site = form.cleaned_data['site']
+            photo_list = getUrl.getImgList(site)
+            return render(request, u'myalbum.html', {'form': form,
+                                                     'photo_list': photo_list,
+                                                     'site': site})
+    else:
+        form = siteForm()
+        photo_list = getUrl.getImgList(url) 
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
                                              'site': url})
