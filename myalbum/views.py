@@ -22,6 +22,13 @@ def myalbum(request):
             return render(request, u'myalbum.html', {'form': form,
                                                      'photo_list': photo_list,
                                                      'site': site})
+        else:   # when POST is invalid
+            form = siteForm()
+            site = defaultUrl
+            photo_list = getUrl.getImgList(site) 
+            return render(request, u'myalbum.html', {'form': form,
+                                                     'photo_list': photo_list,
+                                                     'site': site})
     else :          # when not POST
         form = siteForm()
         site = defaultUrl
@@ -40,9 +47,18 @@ def myalbum_geturl(request, url):
             return render(request, u'myalbum.html', {'form': form,
                                                      'photo_list': photo_list,
                                                      'site': site})
-    else:       # when POST is invalid
+        else:   # when POST is invalid
+            form = siteForm()
+            site = defaultUrl
+            photo_list = getUrl.getImgList(site) 
+            return render(request, u'myalbum.html', {'form': form,
+                                                     'photo_list': photo_list,
+                                                     'site': site})
+            
+    else:       # when not POST , just by /url/(.+?)
         form = siteForm()
-        photo_list = getUrl.getImgList(url) 
+        site = url
+        photo_list = getUrl.getImgList(site) 
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
-                                             'site': url})
+                                             'site': site})
