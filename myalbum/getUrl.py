@@ -6,6 +6,8 @@ import re
 import urllib2
 import mySpider
 
+defaultUrl = 'www.meizitu.com'
+
 def getHtml(url):   # old function 
     html = ''
     try:
@@ -20,14 +22,14 @@ def getHtml(url):   # old function
         html = '/static/images/404-luotianyi.jpg'
     return html
 
-def getImgList_old(url = "http://www.tuchong.com"):
+def getImgList_old(url = defaultUrl):
     html = getHtml(url)
 ##    re2=r'meizitu.com/.+\.jpg'
     re2 = '(?<=src=\").+?(?<!limg)\.jpg(?=\")'      # limg ??
     imglist = re.findall(re2, html)
     return imglist
 
-def getImgList(url = 'http://www.tuchong.com'):
+def getImgList(url = defaultUrl):
     imgInfoList = mySpider.getImg(url)
     imgSrcList = []
     imgHrefList = []

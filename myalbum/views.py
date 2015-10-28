@@ -4,6 +4,8 @@ from django.http import HttpResponse
 import getUrl
 from .forms import siteForm  # form for get site
 
+defaultUrl = 'http://www.meizitu.com'
+
 # Create your views here.
 
 def myalbum_simple(request):
@@ -22,7 +24,7 @@ def myalbum(request):
                                                      'site': site})
     else :          # when not POST
         form = siteForm()
-        site = 'http://www.meizitu.com'
+        site = defaultUrl
         photo_list = getUrl.getImgList(site)
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
@@ -38,9 +40,9 @@ def myalbum_geturl(request, url):
             return render(request, u'myalbum.html', {'form': form,
                                                      'photo_list': photo_list,
                                                      'site': site})
-    else:
+    else:       # when POST is invalid
         form = siteForm()
-        photo_list = getUrl.getImgList(url) 
+        photo_list = getUrl.getImgList('http://www.meizitu.com') 
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
                                              'site': url})

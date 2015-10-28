@@ -23,17 +23,17 @@ def getImg(url = r'http://www.meizitu.com'):
     htmlFile = getHtml(url)
     urlInfoList = []
     
-    reg = r'<a.+?href="(.+?)".+?title="(.+?)".+?src="(.+?\.jpg)' # if has 3 properties
+    reg = r'<a.+?href="(.+?)".+?title="(.+?)".+?src="(.+?\.jpg.*?)"' # if has 3 properties
     imgre = re.compile(reg)
     imglist = re.findall(imgre, htmlFile)
 
     if imglist == []:
-        reg = r'<a.+?href="(.+?)"[\S|\s]*?src="(.+?\.jpg)"'  # if has 2 properties
+        reg = r'<a.+?href="(.+?)"[\S|\s]*?src="(.+?\.jpg.*?)"'  # if has 2 properties
         imgre = re.compile(reg)
         imglist = re.findall(imgre, htmlFile)
         
         if imglist == []:
-            reg = r'src="(.+?jpg)"'  # if only has one property
+            reg = r'src="(.+?jpg.*?)"'  # if only has one property
             imgre = re.compile(reg)
             imglist = re.findall(imgre, htmlFile)
 
@@ -80,9 +80,12 @@ def urlClean(url):
             
     return url
 
-def getHtml(url = 'http://www.meizitu.com'):
+def getHtml(url = 'http://image.baidu.com'):
     url = urlClean(url)
-    req = urllib2.Request(url)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
+        }
+    req = urllib2.Request(url, headers = headers)
     data = urllib2.urlopen(req).read()
     charset = getCharset(data)
     # don't know why it needn't to be decoded - -
