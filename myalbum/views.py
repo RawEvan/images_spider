@@ -42,7 +42,7 @@ def myalbum_geturl(request, url):
                                                      'site': site})
     else:       # when POST is invalid
         form = siteForm()
-        photo_list = getUrl.getImgList('http://www.meizitu.com') 
+        photo_list = getUrl.getImgList(url) 
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
                                              'site': url})
