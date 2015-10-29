@@ -22,7 +22,7 @@ def getHtml(url):   # old function
         html = '/static/images/404-luotianyi.jpg'
     return html
 
-def getImgList_old(url = defaultUrl):
+def getImgList_old(url = defaultUrl):   # old function
     html = getHtml(url)
 ##    re2=r'meizitu.com/.+\.jpg'
     re2 = '(?<=src=\").+?(?<!limg)\.jpg(?=\")'      # limg ??

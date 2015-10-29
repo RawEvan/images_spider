@@ -38,8 +38,8 @@ def getImg(url = r'http://www.meizitu.com'):
             imgre = re.compile(reg)
             imglist = re.findall(imgre, htmlFile)
 
-    for i in imglist:
-##        pdb.set_trace()
+    for i in imglist:   # save image info to urlInfoList
+        #pdb.set_trace()
         if len(i) == 3:
             temp = urlInfo(i[0], i[2], i[1])    # care for the order
         elif len(i) == 2:
@@ -47,7 +47,29 @@ def getImg(url = r'http://www.meizitu.com'):
         else:
             temp = urlInfo(r'http://evandjango.sinaapp.com', i[0])
         urlInfoList.append(temp)
-##        temp.show()
+        #temp.show()
+        
+    if urlInfoList == []:   # if there is no image found
+        temp = urlInfo()
+        temp.src = r'/static/images/noImage.jpg'
+        urlInfoList.append(temp)
+        
+    urlInfoList = dealwithHref(urlInfoList, url)
+        
+    return urlInfoList
+
+
+def dealwithHref(urlInfoList, url):
+    '''
+    if urlInfoList == []:   # if there is no image found
+        temp = urlInfo()    # why it says 'the urlInfo referenced before assignment'
+                            # but this can work in function getImg() below
+        urlInfoList.append(temp)
+    '''
+    for urlInfo in urlInfoList:
+        if urlInfo.href[0] == '/':  # if the href head to server resource
+            urlInfo.href = url + urlInfo.href
+            
     return urlInfoList
 
 def getCharset(htmlFile):
@@ -71,13 +93,12 @@ def urlClean(url):
     '''
     add 'http://' and 'www.'
     '''
-    
-    if 'http' not in url:
-        if 'www' not in url:
-            url = 'http://www.' + url
-        else:
+    if url[0] != r'/':  # when it's internet resource
+        if 'http' not in url:
             url = 'http://' + url
-            
+                
+    else:   # when it's on the server
+        pass
     return url
 
 def getHtml(url = 'http://image.baidu.com'):
@@ -100,5 +121,5 @@ if __name__ == "__main__":
     f = open('C:\users\evann\desktop\meizituHtml.txt', 'r')
     htmlFile = f.read()
     getImg('tuchong.com')
-##    doctest.testmod(verbose = True)
+    #doctest.testmod(verbose = True)
     f.close()

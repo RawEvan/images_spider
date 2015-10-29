@@ -11,7 +11,7 @@ defaultUrl = 'http://www.meizitu.com'
 def myalbum_simple(request):
     photo_list = getUrl.getImgList('meizitu.com')
     return render(request, u'myalbum.html', {'photo_list': photo_list})
-
+'''
 def myalbum(request):
     if request.method == 'POST':        # when POST
         form = siteForm(request.POST)
@@ -36,8 +36,9 @@ def myalbum(request):
     return render(request, u'myalbum.html', {'form': form,
                                              'photo_list': photo_list,
                                              'site': site})
+'''
 
-def myalbum_geturl(request, url):
+def myalbum(request, url = defaultUrl):
     if request.method == 'POST':        # when POST
         form = siteForm(request.POST)
 
