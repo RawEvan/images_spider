@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 '''
 my own spider
+author: rawevan
 '''
 import urllib
 import urllib2
@@ -71,12 +72,11 @@ def urlClean(url):
     add 'http://' and 'www.'
     '''
     
-    if 'www' not in url:
-        if 'http' not in url:
-            url = 'www.' + url
+    if 'http' not in url:
+        if 'www' not in url:
+            url = 'http://www.' + url
+        else:
             url = 'http://' + url
-        
-            
             
     return url
 
@@ -89,11 +89,11 @@ def getHtml(url = 'http://image.baidu.com'):
     data = urllib2.urlopen(req).read()
     charset = getCharset(data)
     # don't know why it needn't to be decoded sometimes- -
-    
     try:
         data = data.decode(charset)
     except:
         print 'decode error'
+        pass
     return data
     
 if __name__ == "__main__":
