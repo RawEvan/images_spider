@@ -8,14 +8,18 @@
 <title>evan's album</title>
 
 <link rel="stylesheet" href="/static/css/lrtk.css" />
-<script src="/static/js/jquery-1.8.2.min.js"></script>
+<script src="http://lib.sinaapp.com/js/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/js.js"></script>
 <script src="/static/js/plugins.js"></script>
 <script src="/static/js/scripts.js"></script>
 
 </head>
+
 <body>
 <!-- 代码 开始 -->
-<p>images jumper</p>
+
+{% include 'myalbum/top_base.html' %}
+
 <form  method = "POST">
 {% csrf_token %}
 {{form}}
@@ -41,7 +45,7 @@
           </figure>
           </a>
       </li>
-	  {% endblock %}
+	{% endblock %}
     </ul>
     <div class="controls">
       <span class="control icon-arrow-left" data-direction="previous"></span> 

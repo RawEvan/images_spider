@@ -20,7 +20,7 @@ admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^/joke', 'joke.views.index', name = 'home'),
+    url(r'^joke', 'joke.views.index', name = 'home'),
     url(r'^add/$', 'calc.views.add', name = 'add'),
     url(r'^add/(\d+)/(\d+)/$', 'calc.views.add2', name = 'add2'),
     url(r'^$', 'myalbum.views.myalbum', name = 'myalbum'),
