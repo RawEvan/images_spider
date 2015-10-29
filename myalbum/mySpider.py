@@ -88,14 +88,12 @@ def getHtml(url = 'http://image.baidu.com'):
     req = urllib2.Request(url, headers = headers)
     data = urllib2.urlopen(req).read()
     charset = getCharset(data)
-    # don't know why it needn't to be decoded - -
+    # don't know why it needn't to be decoded sometimes- -
     
     try:
         data = data.decode(charset)
     except:
         print 'decode error'
-    print data
-    
     return data
     
 if __name__ == "__main__":
