@@ -4,15 +4,18 @@ from django.http import HttpResponse
 import getUrl
 from .forms import siteForm  # form for get site
 
-defaultUrl = 'http://www.meizitu.com'
+defaultUrl = 'http://www.tuchong.com'
 
 # Create your views here.
 
 def myalbum_simple(request):
-    photo_list = getUrl.getImgList('meizitu.com')
+    photo_list = getUrl.getImgList(defaultUrl)
     return render(request, u'myalbum/myalbum.html', {'photo_list': photo_list})
 
 def myalbum(request, url = defaultUrl):
+    ''' here use two ways to get post infomation: POST or urls.py
+    it'll be change in the future...
+    '''
     if request.method == 'POST':        # when POST
         form = siteForm(request.POST)
 
