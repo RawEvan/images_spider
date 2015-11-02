@@ -1,19 +1,19 @@
 ﻿{% extends 'myalbum/album_base.html'%}
 
 {% block thumb %}
-{% for key,value in photo_list.items %}
-	<li class="item"><a href="/url/{{value}}"><img src="{{key}}" alt="" /></a></li>
+{% for eachPhoto in photo_list %}
+	<li class="item"><a href="/url/{{eachPhoto.src}}"><img src="{{eachPhoto.src}}" alt="" /></a></li>
 {% endfor %}
 {% endblock %}
 
 {% block photos %}
-{% for key,value in photo_list.items%}
+{% for eachPhoto in photo_list%}
 	<li class="item--big">
-        <a href="/url/{{value}}">
+        <a href="/url/{{eachPhoto.href}}">
           <figure>
-            <img src="{{key}}" alt="" />
+            <img src="{{eachPhoto.src}}" alt="" />
             <figcaption class="img-caption">
-              Caption
+              {{eachPhoto.description}}
             </figcaption>
           </figure>
           </a>

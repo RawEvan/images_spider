@@ -17,18 +17,25 @@ defaultUrl = r'image.baidu.com'
 
 class urlInfo():
     # store the info of image
-    def __init__(self, href = defaultUrl, src = '', description = r'evan'):
+    def __init__(self, href = defaultUrl, src = '', description = r'no description'):
         self.href = href
         self.src = src
         self.description = description
 
     def show(self):
         print self.href, self.description, self.src
-        
+    
 def getImg(url = defaultUrl):
-    htmlFile = getHtml(url)
-    urlInfoList = []
-    imgList = []    # for img has been find
+    '''
+    this is the main function
+    input  : url to be parsed
+    output : a list of dictions which contains the infomation of images found
+             in the html
+    '''
+    urlInfoList = []    # a list of the class 'urlInfo'
+    imgList = []    # for img has been found
+
+    htmlFile = getHtml(url)     # get the source code of the html
     
     reg = r'<a.+?href="(.+?)".+?title="(.+?)".+?src="(.+?\.jpg.*?)"' # if it has 3 properties
     imgre = re.compile(reg)
@@ -42,6 +49,7 @@ def getImg(url = defaultUrl):
     imgre3 = re.compile(reg3)
     imglist += re.findall(imgre3, htmlFile)
 
+    # simplify this later...
     for i in imglist:   # save image info to urlInfoList
         #pdb.set_trace()
         if len(i) == 3:     # if it has 3 properties
@@ -50,7 +58,7 @@ def getImg(url = defaultUrl):
         elif len(i) == 2:
             temp = urlInfo(i[0], i[1])
             imgList.append(i[1])
-        else:   # can't use i[0] because i isn't a list in this case
+        else:                       # can't use i[0] because i isn't a list in this case
             if i not in imgList:    # avoid from saving the same image
                 temp = urlInfo(defaultUrl, i)
         urlInfoList.append(temp)
@@ -60,10 +68,31 @@ def getImg(url = defaultUrl):
         temp.src = r'/static/images/noImage.jpg'
         urlInfoList.append(temp)
         
-    urlInfoList = dealwithHref(urlInfoList, url)
-        
+    urlInfoList = dealwithHref(urlInfoList, url)    # do sth to the src and href
+
+    urlInfoList = changeClassListToDictList(urlInfoList)    # change the structure
+
     return urlInfoList
 
+def getHtml(url = defaultUrl):
+    '''
+    get the source code
+    '''
+    url = urlClean(url)
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
+        }
+    req = urllib2.Request(url, headers = headers)
+    data = urllib2.urlopen(req).read()
+    time.sleep(2)   # avoid being banned
+    charset = getCharset(data)
+    # don't know why it needn't to be decoded sometimes- -
+    try:
+        data = data.decode(charset)
+    except:
+        print 'decode error'
+        pass    # need more time
+    return data
 
 def dealwithHref(urlInfoList, url):
     '''
@@ -81,9 +110,7 @@ def dealwithHref(urlInfoList, url):
             urlInfo.href = '/static/images/noImage.jpg'
             
         if urlInfo.href[0] == '/':  # if the href head to server resource
-            urlInfo.href = url + urlInfo.href
-            
-        
+            urlInfo.href = url + urlInfo.href    
             
     return urlInfoList
 
@@ -111,28 +138,33 @@ def urlClean(url):
     if url[0] != r'/':  # when it's internet resource
         if 'http' not in url:
             url = 'http://' + url
+    elif 'localhost' in url:    #  # specially for localhost
+        url = 'http://' + url
                 
     else:   # when it's on the server
         pass    # need more time
     return url
 
-def getHtml(url = defaultUrl):
-    url = urlClean(url)
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
-        }
-    req = urllib2.Request(url, headers = headers)
-    data = urllib2.urlopen(req).read()
-    time.sleep(2)   # avoid being banned
-    charset = getCharset(data)
-    # don't know why it needn't to be decoded sometimes- -
-    try:
-        data = data.decode(charset)
-    except:
-        print 'decode error'
-        pass    # need more time
-    return data
-    
+def changeClassListToDictList(urlInfoList):
+    '''
+    change the list of class 'urlInfo' to a list of urlDict
+    each urlDict contain key 'href' 'src' and 'description'
+    this is a sample of urlDictList:
+    urlDictList = [{'src': xxx, 'href': xxx, 'description': xxx},
+                   {'src': xxx, 'href': xxx, 'description': xxx}]
+    '''
+    urlDictList = []
+    #urlTemp = {}
+  
+    for eachUrlInfo in urlInfoList:
+        urlTemp = {}
+        urlTemp['description'] = eachUrlInfo.description
+        urlTemp['href'] = eachUrlInfo.href
+        urlTemp['src'] = eachUrlInfo.src
+        urlDictList.append(urlTemp)
+        
+    return urlDictList
+
 if __name__ == "__main__":
     # test
     f = open('C:\users\evann\desktop\meizituHtml.html', 'r')     # local html

@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 '''
-this file connects the spider and the view
+this file connects the spider and the view which
+change class to dict or list,
+this is unnecessary when 'mySpider.py' was changed to
+return a list of Dict
 '''
 import re
 import urllib2
