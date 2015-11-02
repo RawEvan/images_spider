@@ -34,6 +34,7 @@ def getImg(url = defaultUrl):
     '''
     urlInfoList = []    # a list of the class 'urlInfo'
     imgList = []    # for img has been found
+    srcList = []    # store the src of images and avoid from repeating
 
     htmlFile = getHtml(url)     # get the source code of the html
     
@@ -53,14 +54,22 @@ def getImg(url = defaultUrl):
     for i in imglist:   # save image info to urlInfoList
         #pdb.set_trace()
         if len(i) == 3:     # if it has 3 properties
-            temp = urlInfo(i[0], i[2], i[1])    # care for the order
-            imgList.append(i[2])    # save the image info
+            if i[2] not in srcList:     # if not repeat
+                temp = urlInfo(i[0], i[2], i[1])    # care for the order
+                srcList.append(i[2])    # save the src info and avoid from repeating
+            else:
+                continue
         elif len(i) == 2:
-            temp = urlInfo(i[0], i[1])
-            imgList.append(i[1])
+            if i[1] not in srcList:
+                temp = urlInfo(i[0], i[1])
+                srcList.append(i[1])
+            else:
+                continue
         else:                       # can't use i[0] because i isn't a list in this case
-            if i not in imgList:    # avoid from saving the same image
+            if i not in srcList:    # avoid from saving the same image
                 temp = urlInfo(defaultUrl, i)
+            else:
+                continue
         urlInfoList.append(temp)
         
     if urlInfoList == []:   # if there is no image found
