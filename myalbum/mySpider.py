@@ -72,12 +72,18 @@ def dealwithHref(urlInfoList, url):
                             # but this can work in function getImg() below
         urlInfoList.append(temp)
     '''
-    for urlInfo in urlInfoList:                     
-        if url == r'#':
-            url = '/static/images/noImage.jpg'
+    for urlInfo in urlInfoList:
+        # specially for localhost, change './xxx' to '/../xxx'
+        if urlInfo.src[0] == r'.':
+            urlInfo.src = 'http://localhost:9000/' + urlInfo.src
+            
+        if urlInfo.href == r'#':
+            urlInfo.href = '/static/images/noImage.jpg'
+            
         if urlInfo.href[0] == '/':  # if the href head to server resource
             urlInfo.href = url + urlInfo.href
-
+            
+        
             
     return urlInfoList
 
