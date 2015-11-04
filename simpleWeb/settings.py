@@ -37,8 +37,10 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
     'joke',
     'myalbum',
+    'ranklist'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -128,6 +130,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common_static'),
     'joke/static',
     'myalbum/static',
+    'ranklist/static',
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
