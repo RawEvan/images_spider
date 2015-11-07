@@ -6,7 +6,8 @@ import pdb
 
 def storeImage(imgSrc):
     data = urllib2.urlopen(imgSrc).read()
-    filename = imgSrc.replace('/', '@') + '.' + imgSrc.split('.')[-1]
+    path = imgSrc.split('/')[2] + '/'
+    filename = path + imgSrc.replace('/', '@')  # if '/' in file name there will be problems
     bucket = sae.storage.Bucket('images')
     bucket.put()
     bucket.put_object(filename, data)
