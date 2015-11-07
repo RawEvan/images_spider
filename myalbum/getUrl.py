@@ -26,7 +26,7 @@ def getImgList(url = defaultUrl):
     urlDictList = mySpider.getImg(url)
     srcList = []
     for each in urlDictList:
-        srcList.append(each.src)
+        srcList.append(each['src'])
     storageUrl = 'http://6.evandjango.sinaapp.com/storage'
     data =  {'urlDictList': srcList}
     encodeData = urllib.urlencode(data)
