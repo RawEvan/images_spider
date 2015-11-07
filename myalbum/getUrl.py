@@ -25,7 +25,7 @@ def getImgList_old(url = defaultUrl):   # old function
 def getImgList(url = defaultUrl):
     urlDictList = mySpider.getImg(url)
     
-    storageUrl = '6.evandjango.sinaapp.com/storage'
+    storageUrl = 'http://6.evandjango.sinaapp.com/storage'
     data =  {'urlDictList': urlDictList}
     encodeData = urllib.urlencode(data)
     req = urllib2.Request(storageUrl, encodeData)
