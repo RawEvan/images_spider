@@ -51,10 +51,10 @@ def storeImages(request):
         urlDictList = json.loads(request.POST['urlDictList'])
         for imgInfo in urlDictList:
             storage.storeImage(imgInfo)
-        return '200-ok, all images storaged'
+        return HttpResponse(u'<htm><body>store images ok</body></html>')
     else:
         return HttpResponse(u'<htm><body>store images</body></html>')
 
 def storeImagesByGet(request, url):
     storage.storeImage(url)
-    return '200-ok'
+    return HttpResponse(u'<htm><body>store images ok</body></html>')
