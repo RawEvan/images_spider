@@ -4,26 +4,15 @@ this file connects the spider and the view which
 change class to dict or list,
 this is unnecessary when 'mySpider.py' was changed to
 return a list of Dict
+----
+use this again to connect to storage and keep server files seperated
 '''
 import re
 import urllib2
 import mySpider
+import storage
 
 defaultUrl = 'image.baidu.com'
-
-def getHtml(url):   # old function 
-    html = ''
-    try:
-        html = urllib2.urlopen(url).read().decode('gbk')# try to use gbk
-    except:
-        pass
-    try:
-        html = urllib2.urlopen(url).read().decode('utf-8')# try to use utf-8
-    except:
-        pass
-    if html == '':
-        html = '/static/images/noImage.jpg'
-    return html
 
 def getImgList_old(url = defaultUrl):   # old function
     html = getHtml(url)
@@ -33,10 +22,7 @@ def getImgList_old(url = defaultUrl):   # old function
     return imglist
 
 def getImgList(url = defaultUrl):
-    imgInfoList = mySpider.getImg(url)
-    imgSrcList = []     # don't use this now
-    imgHrefList = []    # don't use this now
-    srcHrefDict = {}
-    for imgInfo in imgInfoList:
-        srcHrefDict[imgInfo.src] = imgInfo.href
-    return srcHrefDict
+    urlDictList = mySpider.getImg(url)
+    for imgInfo in urlDictList:
+        storage.storeImage(imgInfo['src'])
+    return urlDictList
