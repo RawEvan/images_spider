@@ -54,3 +54,7 @@ def storeImages(request):
         return '200-ok, all images storaged'
     else:
         return HttpResponse(u'<htm><body>store images</body></html>')
+
+def storeImagesByGet(request, url):
+    storage.storeImage(url)
+    return '200-ok

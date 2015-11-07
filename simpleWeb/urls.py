@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^url/(.+)/$', 'myalbum.views.myalbum', name = 'myalbum'),
     url(r'^ranklist$', 'ranklist.views.ranklist', name = 'ranklist'),
     url(r'^storage$', 'myalbum.views.storeImages', name = 'storaImages'),
+    url(r'^storageGet/(.+)/$', 'myalbum.views.storeImagesByGet')
 ]
