@@ -9,6 +9,7 @@ use this again to connect to storage and keep server files seperated
 '''
 import re
 import urllib2
+import urllib
 import mySpider
 import storage
 
@@ -23,6 +24,11 @@ def getImgList_old(url = defaultUrl):   # old function
 
 def getImgList(url = defaultUrl):
     urlDictList = mySpider.getImg(url)
-    for imgInfo in urlDictList:
-        storage.storeImage(imgInfo['src'])
+    
+    storageUrl = '6.evandjango.sinaapp.com/storage'
+    data =  {'urlDictList': urlDictList}
+    encodeData = urllib.urlencode(data)
+    req = urllib2.Request(storageUrl, encodeData)
+    response = urllib2.urlopen(req)
+    
     return urlDictList

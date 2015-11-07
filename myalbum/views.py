@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import getUrl
 from .forms import siteForm  # form for get site
+import storage
 
 defaultUrl = 'http://www.tuchong.com'
 
@@ -41,3 +42,10 @@ def myalbum(request, url = defaultUrl):
     return render(request, u'myalbum/myalbum.html', {'form': form,
                                              'photo_list': photo_list,
                                              'site': site})
+
+def storeImages(request):
+    if request.method == 'POST':
+        urlDictList = request.POST['urlDictList']
+        for imgInfo in urlDictList:
+            storage.storeImage(imgInfo['src'])
+    return '200-ok, all images storaged'
