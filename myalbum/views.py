@@ -4,6 +4,7 @@ from django.http import HttpResponse
 import getUrl
 from .forms import siteForm  # form for get site
 import storage
+import json
 
 defaultUrl = 'http://www.tuchong.com'
 
@@ -47,7 +48,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def storeImages(request):
     if request.method == 'POST':
-        urlDictList = request.POST['urlDictList']
+        urlDictList = json.loads(request.POST['urlDictList'])
         for imgInfo in urlDictList:
             storage.storeImage(imgInfo)
         return '200-ok, all images storaged'
