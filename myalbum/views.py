@@ -50,4 +50,4 @@ def storeImages(request):
             storage.storeImage(imgInfo['src'])
         return '200-ok, all images storaged'
     else:
-        return render(request, u'<htm><body>hello</body></html>')
+        return HttpResponse(u'<htm><body>hello</body></html>')
