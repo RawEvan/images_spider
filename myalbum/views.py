@@ -43,6 +43,8 @@ def myalbum(request, url = defaultUrl):
                                              'photo_list': photo_list,
                                              'site': site})
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def storeImages(request):
     if request.method == 'POST':
         urlDictList = request.POST['urlDictList']
