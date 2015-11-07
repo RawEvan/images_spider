@@ -37,7 +37,6 @@ def getImgList(url = defaultUrl):
     response = urllib2.urlopen(req)
     '''
     for each in urlDictList:
-        storageUrl = storageUrl + each['src']
-        response = urllib2.urlopen(storageUrl)
+        response = urllib2.urlopen(storageUrl + each['src'])
     
     return urlDictList
