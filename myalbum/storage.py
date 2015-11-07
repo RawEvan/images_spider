@@ -10,5 +10,4 @@ def storeImage(imgSrc):
     bucket = sae.storage.Bucket('images')
     bucket.put()
     bucket.put_object(imgSrc, data)
-    storageClient.put(filename, ob)
     return  'ok', imgSrc 
