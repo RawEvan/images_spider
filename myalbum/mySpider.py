@@ -93,7 +93,7 @@ def getHtml(url = defaultUrl):
         }
     req = urllib2.Request(url, headers = headers)
     data = urllib2.urlopen(req).read()
-    time.sleep(2)   # avoid being banned
+    # time.sleep(2)   # avoid being banned
     charset = getCharset(data)
     # don't know why it needn't to be decoded sometimes- -
     try:
