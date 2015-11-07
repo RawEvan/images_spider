@@ -48,4 +48,6 @@ def storeImages(request):
         urlDictList = request.POST['urlDictList']
         for imgInfo in urlDictList:
             storage.storeImage(imgInfo['src'])
-    return '200-ok, all images storaged'
+        return '200-ok, all images storaged'
+    else:
+        return render(request, u'<htm><body>hello</body></html>')
