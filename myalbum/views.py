@@ -57,4 +57,4 @@ def storeImages(request):
 
 def storeImagesByGet(request, url):
     storage.storeImage(url)
-    return '200-ok
+    return '200-ok'
