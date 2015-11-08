@@ -119,8 +119,13 @@ def dealwithHref(urlInfoList, url):
             urlInfo.href = '/static/images/noImage.jpg'
 
         # if the href head to server resource, need to be imporoved
-        if urlInfo.href[0] == '/' or '.com' not in urlInfo.href:
-            urlInfo.href = url + urlInfo.href    
+        if urlInfo.href[0] == '/'
+            urlInfo.href = url + urlInfo.href
+
+        if '.com' not in urlInfo.href:
+            splitUrl = url.split('/')[0:-1]
+            baseUrl = u''.join(str + u'/' for str in splitUrl)
+            urlInfo.href = baseUrl + urlInfo.href
             
     return urlInfoList
 
