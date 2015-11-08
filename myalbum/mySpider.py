@@ -117,8 +117,9 @@ def dealwithHref(urlInfoList, url):
             
         if urlInfo.href == r'#':
             urlInfo.href = '/static/images/noImage.jpg'
-            
-        if urlInfo.href[0] == '/':  # if the href head to server resource
+
+        # if the href head to server resource, need to be imporoved
+        if urlInfo.href[0] == '/' or '.com' not in urlInfo.href:
             urlInfo.href = url + urlInfo.href    
             
     return urlInfoList
