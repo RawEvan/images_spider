@@ -20,5 +20,6 @@ def storeImage(imgSrc):
     # save infomation to sql
     try:
         ImgStorage.objects.create(originalUrl = imgSrc, storageUrl = stUrl)
-    except:
+    except :
+        print 'error'
     return  'ok', storageUrl 
