@@ -93,7 +93,7 @@ def getHtml(url = defaultUrl):
         }
     req = urllib2.Request(url, headers = headers)
     data = urllib2.urlopen(req).read()
-    #time.sleep(2)   # avoid being banned
+    # time.sleep(2)   # avoid being banned
     charset = getCharset(data)
     # don't know why it needn't to be decoded sometimes- -
     try:
@@ -117,9 +117,15 @@ def dealwithHref(urlInfoList, url):
             
         if urlInfo.href == r'#':
             urlInfo.href = '/static/images/noImage.jpg'
-            
-        if urlInfo.href[0] == '/':  # if the href head to server resource
-            urlInfo.href = url + urlInfo.href    
+
+        # if the href head to server resource, need to be imporoved
+        if urlInfo.href[0] == '/':
+            urlInfo.href = url + urlInfo.href
+
+        if '.com' not in urlInfo.href:
+            splitUrl = url.split('/')[0:-1]
+            baseUrl = u''.join(str + u'/' for str in splitUrl)
+            urlInfo.href = baseUrl + urlInfo.href
             
     return urlInfoList
 

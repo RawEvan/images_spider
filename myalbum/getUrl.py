@@ -4,26 +4,17 @@ this file connects the spider and the view which
 change class to dict or list,
 this is unnecessary when 'mySpider.py' was changed to
 return a list of Dict
+----
+use this again to connect to storage and keep server files seperated
 '''
 import re
 import urllib2
+import urllib
 import mySpider
-
+import storage
+import json
+from myalbum.models import imgstorage
 defaultUrl = 'image.baidu.com'
-
-def getHtml(url):   # old function 
-    html = ''
-    try:
-        html = urllib2.urlopen(url).read().decode('gbk')# try to use gbk
-    except:
-        pass
-    try:
-        html = urllib2.urlopen(url).read().decode('utf-8')# try to use utf-8
-    except:
-        pass
-    if html == '':
-        html = '/static/images/noImage.jpg'
-    return html
 
 def getImgList_old(url = defaultUrl):   # old function
     html = getHtml(url)
@@ -33,10 +24,23 @@ def getImgList_old(url = defaultUrl):   # old function
     return imglist
 
 def getImgList(url = defaultUrl):
-    imgInfoList = mySpider.getImg(url)
-    imgSrcList = []     # don't use this now
-    imgHrefList = []    # don't use this now
-    srcHrefDict = {}
-    for imgInfo in imgInfoList:
-        srcHrefDict[imgInfo.src] = imgInfo.href
-    return srcHrefDict
+    urlDictList = mySpider.getImg(url)
+    storageUrl = u'http://6.evandjango.sinaapp.com/storageGet/'
+    '''
+    srcList = []
+    for each in urlDictList:
+        srcList.append(each['src'])
+    jsonSrcList = json.dumps(srcList)
+    data =  {'urlDictList': jsonSrcList}
+    encodeData = urllib.urlencode(data)
+    req = urllib2.Request(storageUrl, encodeData)
+    response = urllib2.urlopen(req)
+    '''
+    for each in urlDictList:
+        response = urllib2.urlopen(storageUrl + each['src'])    # store images to storage
+
+    # replace original_url with storage_url
+    for each in urlDictList:
+        each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
+               
+    return urlDictList
