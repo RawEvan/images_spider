@@ -13,7 +13,7 @@ import urllib
 import mySpider
 import storage
 import json
-
+from myalbum.models import imgstorage
 defaultUrl = 'image.baidu.com'
 
 def getImgList_old(url = defaultUrl):   # old function
@@ -37,6 +37,10 @@ def getImgList(url = defaultUrl):
     response = urllib2.urlopen(req)
     '''
     for each in urlDictList:
-        response = urllib2.urlopen(storageUrl + each['src'])
-    
+        response = urllib2.urlopen(storageUrl + each['src'])    # store images to storage
+
+    # replace original_url with storage_url
+    for each in urlDictList:
+        each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
+               
     return urlDictList
