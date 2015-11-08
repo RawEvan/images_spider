@@ -28,5 +28,5 @@ urlpatterns = [
     url(r'^ranklist$', 'ranklist.views.ranklist', name = 'ranklist'),
     url(r'^storage$', 'myalbum.views.storeImages', name = 'storaImages'),
     url(r'^storageGet/(.+)/$', 'myalbum.views.storeImagesByGet'),
-    url(r'^mysqlTest&', 'myalbum.views.mysqlTest'),
+    url(r'^mysqlTest$', 'myalbum.views.mysqlTest'),
 ]
