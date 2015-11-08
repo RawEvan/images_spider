@@ -3,7 +3,7 @@ import sae.storage
 import urllib2
 from datetime import datetime
 import pdb
-from myalbum.models import ImgStorage
+from myalbum.models import imgstorage
 
 def storeImage(imgSrc):
     data = urllib2.urlopen(imgSrc).read()
@@ -19,7 +19,7 @@ def storeImage(imgSrc):
     print 'store ok'
     # save infomation to sql
     try:
-        ImgStorage.objects.create(originalUrl = imgSrc, storageUrl = stUrl)
+        ImgStorage.objects.create(original_url = imgSrc, storage_url = stUrl)
     except :
         print 'error'
     return  'ok', storageUrl 

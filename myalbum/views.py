@@ -60,7 +60,7 @@ def storeImagesByGet(request, url):
     return HttpResponse(u'<html><body>store images ok</body></html>')
 
 def mysqlTest(request):
-    from myalbum.models import ImgStorage
+    from myalbum.models import imgstorage
     import time
-    ImgStorage.objects.create(originalUrl = time.ctime(),  storageUrl = time.ctime())
+    ImgStorage.objects.create(original_url = time.ctime(),  storage_url = time.ctime())
     return HttpResponse(u'<html><body>stored!</body></html>')
