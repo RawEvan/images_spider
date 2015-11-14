@@ -28,7 +28,7 @@ def getImgList(url = defaultUrl):
         urlDictList = mySpider.getImg(url)
     except:
         urlDictList = [{'href': 'evandjango.sinaapp.com',
-                        'src': '/static/images/noimage.jpg',
+                        'src': '/static/images/noImage.jpg',
                         'description': 'no description'}]
     storageUrl = u'http://6.evandjango.sinaapp.com/storageGet/'
     '''
@@ -45,7 +45,7 @@ def getImgList(url = defaultUrl):
         try:
             response = urllib2.urlopen(storageUrl + each['src'])    # store images to storage
         except:
-            pass    # solve this later
+            pass    # solve this later, maybe the problem happens when there are chinese in url
         
     # replace original_url with storage_url
     for each in urlDictList:
