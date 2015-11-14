@@ -46,6 +46,8 @@ def getImgList(url = defaultUrl):
 
     # replace original_url with storage_url
     for each in urlDictList:
-        each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
-               
+        try:
+            each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
+        except:
+            pass    # solve this later
     return urlDictList
