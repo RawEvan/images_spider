@@ -20,4 +20,7 @@ def storeImage(imgSrc):
         bucket.put_object(filename, data)
         stUrl = bucket.generate_url(filename)   # get url of image in the storage
         # save infomation to sql
-        imgstorage.objects.get_or_create(original_url = imgSrc, storage_url = stUrl)
+        try:
+            imgstorage.objects.get_or_create(original_url = imgSrc, storage_url = stUrl)
+        except:
+            pass    # solve this later
