@@ -24,7 +24,12 @@ def getImgList_old(url = defaultUrl):   # old function
     return imglist
 
 def getImgList(url = defaultUrl):
-    urlDictList = mySpider.getImg(url)
+    try:
+        urlDictList = mySpider.getImg(url)
+    except:
+        urlDictList = [{'href': 'evandjango.sinaapp.com',
+                        'src': '/static/images/noImage.jpg',
+                        'description': 'no description'}]
     storageUrl = u'http://6.evandjango.sinaapp.com/storageGet/'
     '''
     srcList = []
@@ -37,10 +42,15 @@ def getImgList(url = defaultUrl):
     response = urllib2.urlopen(req)
     '''
     for each in urlDictList:
-        response = urllib2.urlopen(storageUrl + each['src'])    # store images to storage
-
+        try:
+            response = urllib2.urlopen(storageUrl + each['src'])    # store images to storage
+        except:
+            pass    # solve this later, maybe the problem happens when there are chinese in url
+        
     # replace original_url with storage_url
     for each in urlDictList:
-        each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
-               
+        try:
+            each['src'] = (imgstorage.objects.get(original_url = each['src'])).storage_url
+        except:
+            pass    # solve this later
     return urlDictList
