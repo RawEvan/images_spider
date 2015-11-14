@@ -24,7 +24,12 @@ def getImgList_old(url = defaultUrl):   # old function
     return imglist
 
 def getImgList(url = defaultUrl):
-    urlDictList = mySpider.getImg(url)
+    try:
+        urlDictList = mySpider.getImg(url)
+    except:
+        urlDictList = [{'href': 'evandjango.sinaapp.com',
+                        'src': '/static/images/noimage.jpg',
+                        'description': 'no description'}]
     storageUrl = u'http://6.evandjango.sinaapp.com/storageGet/'
     '''
     srcList = []
