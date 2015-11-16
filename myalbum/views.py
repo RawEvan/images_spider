@@ -57,7 +57,7 @@ def storeImages(request):
 
 def storeImagesByGet(request, url):
     storageUrl = storage.storeImage(url)
-    return HttpResponse(u'<html><body>store images ok, url:%s</body></html>' % storageUrl)
+    return HttpResponse(u'<html><body>store images ok, return:%s</body></html>' % storageUrl)
 
 def mysqlTest(request):
     from myalbum.models import imgstorage
