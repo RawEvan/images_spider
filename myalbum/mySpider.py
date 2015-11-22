@@ -12,6 +12,7 @@ import doctest
 import os
 import pdb
 import time
+import chardet
 
 defaultUrl = r'image.baidu.com'
 
@@ -83,6 +84,14 @@ def getImg(url = defaultUrl):
 
     return urlInfoList
 
+def decompress(data):
+    isGzip = data.headers.get('Content-Encoding')
+    if isGzip:
+        compressedData = data.read()
+        stream = StringIO.StringIO(compressedData)
+        data = gzip.GzipFile(fileobj = stream)
+    return data
+
 def getHtml(url = defaultUrl):
     '''
     get the source code
@@ -91,17 +100,17 @@ def getHtml(url = defaultUrl):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
         }
-    req = urllib2.Request(url, headers = headers)
-    data = urllib2.urlopen(req).read()
-    # time.sleep(2)   # avoid being banned
-    charset = getCharset(data)
-    # don't know why it needn't to be decoded sometimes- -
     try:
-        data = data.decode(charset)
+        req = urllib2.Request(url, headers = headers)
+        data = urllib2.urlopen(req)
+        data = decompress(data).read()  # decompress if gzip used
     except:
-        print 'decode error'
-        pass    # need more time
-    return data
+        print 'urlopen error'
+        data = ''
+    # time.sleep(2)   # avoid being banned
+    charset = chardet.detect(data)['encoding']
+    htmlCode = data.decode(charset)
+    return htmlCode
 
 def dealwithHref(urlInfoList, url):
     '''
@@ -128,23 +137,6 @@ def dealwithHref(urlInfoList, url):
             urlInfo.href = baseUrl + urlInfo.href
             
     return urlInfoList
-
-def getCharset(htmlFile):
-    '''
-    example
-    >>> print getCharset(htmlFile)
-    gbk
-    '''
-    regCharset = r'charset="(.+?)"'     # don't know how to get charset exactly after <head>
-    reCharset = re.compile(regCharset)
-    charset = re.findall(reCharset, htmlFile)
-    if charset  != []:
-        if 'gb' in charset[0]:
-            return 'gbk'
-        elif 'utf-8' in charset[0]:
-            return 'utf-8'
-    else:
-        return 'utf-8'      # set utf-8 as default choice
 
 def urlClean(url):
     '''
