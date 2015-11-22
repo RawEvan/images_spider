@@ -45,7 +45,7 @@ def storeImage(imgSrc):
         filename = path + imgSrc.replace('/', '@')
         scsResponse = s.put(filename, data)
         
-        stUrl = s.make_url_authed(filename)   # get url of image in the storage
+        stUrl = s.make_url(filename)   # get url of image in the storage
         
         # save infomation to sql
         try:
