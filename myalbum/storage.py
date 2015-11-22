@@ -33,7 +33,8 @@ def storeImage_old(imgSrc):
 def storeImage(imgSrc):
     sinastorage.setDefaultAppInfo('1cjfyo5kQPdnsI3cUc6W',
                                   'a3c139370a3509f269331930515729747573aa10')
-    s = SCSBucket('dj-images')  # not dj_images
+    djBucket = SCSBucket('dj-images')  # not dj_images
+    pdb.set_trace()
 
     try:
         savedUrl = imgstorage.objects.get(original_url = imgSrc)
@@ -43,14 +44,15 @@ def storeImage(imgSrc):
         path = imgSrc.split('/')[2] + '/'
         # if '/' in file name there will be problems
         filename = path + imgSrc.replace('/', '@')
-        scsResponse = s.put(filename, data)
+        scsResponse = djBucket.put(filename, data)
         
-        stUrl = s.make_url(filename)   # get url of image in the storage
+        stUrl = djBucket.make_url(filename)   # get url of image in the storage
         
         # save infomation to sql
         try:
             imgstorage.objects.get_or_create(original_url = imgSrc, storage_url = stUrl)
         except:
+            print 'insert into mysql error'
             pass    # solve this later
 
         return stUrl
