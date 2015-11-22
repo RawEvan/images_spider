@@ -20,12 +20,6 @@
 
 {% include 'myalbum/top_base.html' %}
 
-<p>
-{% block currentSite %}
-当前网址：none
-{% endblock %}
-</p><br>
-
 <form  method = "POST">
 {% csrf_token %}
 {{form}}
@@ -62,7 +56,6 @@
     
   </div>
   
-
 <script>
     $(document).ready(function(){
      $('#gallery-container').sGallery({
@@ -71,7 +64,15 @@
     });
 </script>
 <!-- 代码 结束 -->
+
 <div style="text-align:center;margin:30px 0">
+
+	<p>
+	{% block currentSite %}
+	当前网址：none
+	{% endblock %}
+	</p><br>
+	
 <p>css&js来源：<a href="https://github.com/SaraSoueidan/s-gallery" target="_blank">s-gallery</a>　代码整理：<a href="http://www.lanrentuku.com/" target="_blank">懒人图库</a>　感谢：<a href="http://blog.hexccc.com" target="_blank">wordpress Xcoder</a></p>
 <p></p>
 <p style="margin:20px 0"></p>
