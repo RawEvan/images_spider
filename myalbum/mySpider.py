@@ -84,8 +84,6 @@ def getImg(url = defaultUrl):
 
     urlInfoList = changeClassListToDictList(urlInfoList)    # change the structure
 
-    pdb.set_trace()
-
     return urlInfoList
 
 def decompress(data):
