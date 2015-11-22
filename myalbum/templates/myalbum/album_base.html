@@ -20,6 +20,12 @@
 
 {% include 'myalbum/top_base.html' %}
 
+<p>
+{% block currentSite %}
+当前网址：none
+{% endblock %}
+</p><br>
+
 <form  method = "POST">
 {% csrf_token %}
 {{form}}

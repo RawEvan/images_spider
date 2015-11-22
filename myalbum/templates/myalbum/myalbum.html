@@ -1,5 +1,9 @@
 ﻿{% extends 'myalbum/album_base.html'%}
 
+{% block currentSite %}
+当前爬取网址：{{site}}
+{% endblock %}
+
 {% block thumb %}
 {% for eachPhoto in photo_list %}
 	<li class="item"><a href="/url/{{eachPhoto.src}}"><img src="{{eachPhoto.src}}" alt="" /></a></li>
