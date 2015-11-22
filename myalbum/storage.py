@@ -35,24 +35,20 @@ def storeImage(imgSrc):
     djBucket = SCSBucket('dj-images')  # not dj_images
     acl = {}    # Access control list
     acl[ACL.ACL_GROUP_ANONYMOUSE] = [ACL.ACL_READ]
-    
-    try:
-        savedUrl = imgstorage.objects.get(original_url = imgSrc)
-        return savedUrl
-    except:
-        data = urllib2.urlopen(imgSrc).read()
-        path = imgSrc.split('/')[2] + '/'
-        # if '/' in file name there will be problems
-        filename = path + imgSrc.replace('/', '@')
-        scsResponse = djBucket.put(filename, data)  # upload the file
-        stUrl = djBucket.make_url(filename)   # get url of image in the storage
-        djBucket.update_acl(filename, acl)     # set acl for the file 
-        
-        # save infomation to sql
-        try:
-            imgstorage.objects.get_or_create(original_url = imgSrc, storage_url = stUrl)
-        except:
-            print 'insert into mysql error'
-            pass    # solve this later
 
-        return stUrl
+    data = urllib2.urlopen(imgSrc).read()
+    path = imgSrc.split('/')[2] + '/'
+    # if '/' in file name there will be problems
+    filename = path + imgSrc.replace('/', '@')
+    scsResponse = djBucket.put(filename, data)  # upload the file
+    stUrl = djBucket.make_url(filename)   # get url of image in the storage
+    djBucket.update_acl(filename, acl)     # set acl for the file 
+    
+    # save infomation to sql
+    try:
+        imgstorage.objects.get_or_create(original_url = imgSrc, storage_url = stUrl)
+    except:
+        print 'insert into mysql error'
+        pass    # solve this later
+
+    return stUrl
