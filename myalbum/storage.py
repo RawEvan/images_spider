@@ -34,8 +34,7 @@ def storeImage(imgSrc):
     sinastorage.setDefaultAppInfo('1cjfyo5kQPdnsI3cUc6W',
                                   'a3c139370a3509f269331930515729747573aa10')
     djBucket = SCSBucket('dj-images')  # not dj_images
-    pdb.set_trace()
-
+    
     try:
         savedUrl = imgstorage.objects.get(original_url = imgSrc)
         return savedUrl
@@ -44,9 +43,12 @@ def storeImage(imgSrc):
         path = imgSrc.split('/')[2] + '/'
         # if '/' in file name there will be problems
         filename = path + imgSrc.replace('/', '@')
-        scsResponse = djBucket.put(filename, data)
-        
+        scsResponse = djBucket.put(filename, data)  # upload the file
+    
+        acl = {}    # Access control list
+        acl[ACL.ACL_GROUP_ANONYMOUSE] = [ACL.ACL_READ]    
         stUrl = djBucket.make_url(filename)   # get url of image in the storage
+        djBucket.update_acl(stUrl, acl)     # set acl for the file 
         
         # save infomation to sql
         try:
