@@ -13,6 +13,7 @@ import os
 import pdb
 import time
 import chardet
+import StringIO
 
 defaultUrl = r'image.baidu.com'
 
