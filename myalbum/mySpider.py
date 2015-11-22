@@ -14,6 +14,7 @@ import pdb
 import time
 import chardet
 import StringIO
+import gzip
 
 defaultUrl = r'image.baidu.com'
 
@@ -83,6 +84,8 @@ def getImg(url = defaultUrl):
 
     urlInfoList = changeClassListToDictList(urlInfoList)    # change the structure
 
+    pdb.set_trace()
+
     return urlInfoList
 
 def decompress(data):
@@ -101,13 +104,9 @@ def getHtml(url = defaultUrl):
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
         }
-    try:
-        req = urllib2.Request(url, headers = headers)
-        data = urllib2.urlopen(req)
-        data = decompress(data).read()  # decompress if gzip used
-    except:
-        print 'urlopen error'
-        data = ''
+    req = urllib2.Request(url, headers = headers)
+    data = urllib2.urlopen(req)
+    data = decompress(data).read()  # decompress if gzip used
     # time.sleep(2)   # avoid being banned
     charset = chardet.detect(data)['encoding']
     htmlCode = data.decode(charset)
