@@ -38,9 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    'joke',
+    #'joke',
     'myalbum',
-    'ranklist'
+    #'ranklist'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -86,7 +86,7 @@ if 'SERVER_SOFTWARE' not in os.environ:
             'ENGINE': 'django.db.backends.mysql',
             'NAME': 'app_evandjango',
             'USER': 'root',
-            'PASSWORD': '220200',
+            'PASSWORD': 'xxxxxx',
             'HOST': 'localhost',
         }
     }
@@ -128,9 +128,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common_static'),
-    'joke/static',
+    #'joke/static',
     'myalbum/static',
-    'ranklist/static',
+    #'ranklist/static',
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
