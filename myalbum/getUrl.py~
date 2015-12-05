@@ -43,7 +43,6 @@ def getImgList(url = defaultUrl):
     response = urllib2.urlopen(req)
     '''
         
-    '''     # don't save images to storage in order to increase the speed
     # replace original_url with storage_url
     for each in urlDictList:
         try:    # if in mysql
@@ -55,5 +54,4 @@ def getImgList(url = defaultUrl):
             except:
                 print 'stores failed or get url from mysql failed'
                 pass    # solve this later
-    '''
     return urlDictList
