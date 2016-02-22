@@ -1,0 +1,9 @@
+#!/usr/bin/python
+#coding:utf-8
+import json
+dic = {}
+dic["ip"] = '111'
+jsonDic = json.dumps(dic)
+f = open('file.txt','w')
+f.write(jsonDic)
+f.close()
