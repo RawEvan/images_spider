@@ -26,7 +26,7 @@ def getHtml(url = defaultUrl):
     data = urllib2.urlopen(req)
     return data.read()
 
-def getproxy(url = defaultUrl):
+def getProxy(url = defaultUrl):
     f = open("IPInfo.txt", 'rb')
     try:
         IPFile = json.loads(f.read())
@@ -38,7 +38,7 @@ def getproxy(url = defaultUrl):
     finally:
         f.close()
 
-    #iplist is out-of-date, update it
+    #IPList is out-of-date, update it
     print '----update ip list-------'
     IPList = []
     try:
@@ -47,14 +47,16 @@ def getproxy(url = defaultUrl):
         print 'urlopen error:%s' % (url)
     reg = r'<tr class="odd">[\s\S]*?<td>(\d+?\.\d+?\.\d+?\.\d+?)</td>[\s\S]*?<td>(.+?)</td>'
     regcompl = re.compile(reg)
-    iplist = re.findall(regcompl, data)
-    for IP, port in iplist:
+    result= re.findall(regcompl, data)
+    for IP, port in result:
         newIP = str(IP) + ':' +str(port) 
         IPList.append(newIP)
     saveIP(IPList)
     return IPList
 
 def saveIP(IPList = ['127.0.0.0:80']):
+    if not IPList:
+        getProxy()
     fileDict = {}
     fileDict['IPList'] = IPList
     fileDict['time'] = time.time()
@@ -68,8 +70,8 @@ def saveIP(IPList = ['127.0.0.0:80']):
     print 'time:', time.localtime()
 
 def main():
-    getproxy()
+    getProxy()
 if __name__ == "__main__":
-    #getproxy()
+    #getProxy()
     #saveIP()
     main()

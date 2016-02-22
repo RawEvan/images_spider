@@ -13,25 +13,28 @@ def getData(ip):
     opener = urllib2.build_opener(urllib2.ProxyHandler(proxyDict))
     urllib2.install_opener(opener)
     url = 'http://www.baidu.com/s?ie=UTF-8&wd=ip'
-    data = urllib2.urlopen(url, None, 9).read()
+    header = {'Accept-Charset':'GBK,utf-8;q=0.7,*;q=0.3','User-Agent' : 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.151 Safari/534.16'}
+    req = urllib2.Request(url, headers = header)
+    data = urllib2.urlopen(req, None, 9).read()
     return data
 
 def main():
-    iplist = getip.getproxy()
+    IPList = getip.getproxy()
     data = ''
-    while len(iplist) > 0:
-        ip = choice(iplist)
+    while len(IPList) > 0:
+        ip = choice(IPList)
         try:
             data = getData(ip)
             break
         except:
-            iplist.remove(ip)
-        print 'proxy error, try again, ip:%s' % (ip)
+            IPList.remove(ip)
+        print 'ip:%s, proxy error, try another ip' % (ip)
+    getip.saveIP(IPList)
     restr = r'gap-right.+?(\d+?\.\d+?\.\d+?\.\d+?)</span>'
     reg = re.compile(restr)
     result = re.findall(reg, data)
     print result
-    if ip.split(':')[0] == result:
+    if ip.split(':')[0] == result[0]:
         print 'proxy ok'
 
 if __name__ == '__main__':
