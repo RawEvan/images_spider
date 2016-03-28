@@ -2,4 +2,4 @@
 from django import forms
 
 class siteForm(forms.Form):
-    site = forms.CharField(label = '网址 ', initial = 'image.baidu.com')
+    site = forms.CharField(label = '网址 ', initial = 'http://www.tuchong.com')
