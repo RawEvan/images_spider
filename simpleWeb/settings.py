@@ -37,10 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'joke',
     'myalbum',
-    'ranklist'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,32 +75,6 @@ WSGI_APPLICATION = 'simpleWeb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-import os
-if 'SERVER_SOFTWARE' not in os.environ:
-# use in localhost
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'app_evandjango',
-            'USER': 'root',
-            'PASSWORD': '220200',
-            'HOST': 'localhost',
-        }
-    }
-else:
-    # connect to sae
-    import sae.const
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': sae.const.MYSQL_DB,
-            'USER': sae.const.MYSQL_USER,
-            'PASSWORD': sae.const.MYSQL_PASS,
-            'HOST': sae.const.MYSQL_HOST,
-            'PORT': sae.const.MYSQL_PORT,
-        }
-    }
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -128,9 +99,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'common_static'),
-    'joke/static',
     'myalbum/static',
-    'ranklist/static',
 )
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',

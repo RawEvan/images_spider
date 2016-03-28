@@ -16,7 +16,7 @@ import chardet
 import StringIO
 import gzip
 
-defaultUrl = r'image.baidu.com'
+defaultUrl = r'http://www.tuchong.com'
 
 class urlInfo():
     # store the info of image
@@ -172,7 +172,8 @@ def changeClassListToDictList(urlInfoList):
 
 if __name__ == "__main__":
     # test
-    f = open('C:\users\evann\desktop\meizituHtml.html', 'r')     # local html
+    htmlFile = ('/local/html/file')
+    f = open(htmlFile, 'r')     # local html
     htmlFile = f.read()
     getImg('image.baidu.com')
     #doctest.testmod(verbose = True)

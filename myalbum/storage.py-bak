@@ -1,3 +1,4 @@
+"""
 import sae
 import sae.storage
 import urllib2
@@ -52,3 +53,4 @@ def storeImage(imgSrc):
         pass    # solve this later
 
     return stUrl
+"""
