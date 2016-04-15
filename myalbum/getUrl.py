@@ -13,6 +13,7 @@ This file seems unnecessary now, just leave it waitting for other use.
 '''
 import mySpider
 
+
 def getImgList(url):
     try:
         urlDictList = mySpider.getImg(url)

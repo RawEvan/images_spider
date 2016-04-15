@@ -18,17 +18,20 @@ import gzip
 
 defaultUrl = r'http://www.tuchong.com'
 
+
 class urlInfo():
     # store the info of image
-    def __init__(self, href = defaultUrl, src = '', description = r'no description'):
+
+    def __init__(self, href=defaultUrl, src='', description=r'no description'):
         self.href = href
         self.src = src
         self.description = description
 
     def show(self):
         print self.href, self.description, self.src
-    
-def getImg(url = defaultUrl):
+
+
+def getImg(url=defaultUrl):
     '''
     this is the main function
     input  : url to be parsed
@@ -40,12 +43,14 @@ def getImg(url = defaultUrl):
     srcList = []    # store the src of images and avoid from repeating
 
     htmlFile = getHtml(url)     # get the source code of the html
-    
-    reg = r'<a.+?href="(.+?)".+?title="(.+?)".+?src="(.+?\.jpg.*?)"' # if it has 3 properties
+
+    # if it has 3 properties
+    reg = r'<a.+?href="(.+?)".+?title="(.+?)".+?src="(.+?\.jpg.*?)"'
     imgre = re.compile(reg)
     imglist = re.findall(imgre, htmlFile)
 
-    reg2 = r'<a.+?href="(.+?)"[\S|\s]*?src="(.+?\.jpg.*?)"'  # if it has 2 properties
+    # if it has 2 properties
+    reg2 = r'<a.+?href="(.+?)"[\S|\s]*?src="(.+?\.jpg.*?)"'
     imgre2 = re.compile(reg2)
     imglist += re.findall(imgre2, htmlFile)
 
@@ -55,11 +60,12 @@ def getImg(url = defaultUrl):
 
     # simplify this later...
     for i in imglist:   # save image info to urlInfoList
-        #pdb.set_trace()
+        # pdb.set_trace()
         if len(i) == 3:     # if it has 3 properties
             if i[2] not in srcList:     # if not repeat
                 temp = urlInfo(i[0], i[2], i[1])    # care for the order
-                srcList.append(i[2])    # save the src info and avoid from repeating
+                # save the src info and avoid from repeating
+                srcList.append(i[2])
             else:
                 continue
         elif len(i) == 2:
@@ -68,47 +74,53 @@ def getImg(url = defaultUrl):
                 srcList.append(i[1])
             else:
                 continue
-        else:                       # can't use i[0] because i isn't a list in this case
+        # can't use i[0] because i isn't a list in this case
+        else:
             if i not in srcList:    # avoid from saving the same image
                 temp = urlInfo(defaultUrl, i)
             else:
                 continue
         urlInfoList.append(temp)
-        
+
     if urlInfoList == []:   # if there is no image found
         temp = urlInfo()
         temp.src = r'/static/images/noImage.jpg'
         urlInfoList.append(temp)
-        
-    urlInfoList = dealwithHref(urlInfoList, url)    # do sth to the src and href
 
-    urlInfoList = changeClassListToDictList(urlInfoList)    # change the structure
+    # do sth to the src and href
+    urlInfoList = dealwithHref(urlInfoList, url)
+
+    urlInfoList = changeClassListToDictList(
+        urlInfoList)    # change the structure
 
     return urlInfoList
+
 
 def decompress(data):
     isGzip = data.headers.get('Content-Encoding')
     if isGzip:
         compressedData = data.read()
         stream = StringIO.StringIO(compressedData)
-        data = gzip.GzipFile(fileobj = stream)
+        data = gzip.GzipFile(fileobj=stream)
     return data
 
-def getHtml(url = defaultUrl):
+
+def getHtml(url=defaultUrl):
     '''
     get the source code
     '''
     url = urlClean(url)
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36'
-        }
-    req = urllib2.Request(url, headers = headers)
+    }
+    req = urllib2.Request(url, headers=headers)
     data = urllib2.urlopen(req)
     data = decompress(data).read()  # decompress if gzip used
     # time.sleep(2)   # avoid being banned
     charset = chardet.detect(data)['encoding']
     htmlCode = data.decode(charset)
     return htmlCode
+
 
 def dealwithHref(urlInfoList, url):
     '''
@@ -121,7 +133,7 @@ def dealwithHref(urlInfoList, url):
         # specially for localhost, change './xxx' to '/../xxx'
         if urlInfo.src[0] == r'.':
             urlInfo.src = 'http://localhost:9000/' + urlInfo.src
-            
+
         if urlInfo.href == r'#':
             urlInfo.href = '/static/images/noImage.jpg'
 
@@ -133,8 +145,9 @@ def dealwithHref(urlInfoList, url):
             splitUrl = url.split('/')[0:-1]
             baseUrl = u''.join(str + u'/' for str in splitUrl)
             urlInfo.href = baseUrl + urlInfo.href
-            
+
     return urlInfoList
+
 
 def urlClean(url):
     '''
@@ -143,12 +156,13 @@ def urlClean(url):
     if url[0] != r'/':  # when it's internet resource
         if 'http' not in url:
             url = 'http://' + url
-    elif 'localhost' in url:    #  # specially for localhost
+    elif 'localhost' in url:  # specially for localhost
         url = 'http://' + url
-                
+
     else:   # when it's on the server
         pass    # need more time
     return url
+
 
 def changeClassListToDictList(urlInfoList):
     '''
@@ -160,14 +174,14 @@ def changeClassListToDictList(urlInfoList):
     '''
     urlDictList = []
     #urlTemp = {}
-  
+
     for eachUrlInfo in urlInfoList:
         urlTemp = {}
         urlTemp['description'] = eachUrlInfo.description
         urlTemp['href'] = eachUrlInfo.href
         urlTemp['src'] = eachUrlInfo.src
         urlDictList.append(urlTemp)
-        
+
     return urlDictList
 
 if __name__ == "__main__":

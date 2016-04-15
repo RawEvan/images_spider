@@ -11,7 +11,8 @@ import time
 
 defaultUrl = 'http://www.xicidaili.com'
 
-def getHtml(url = defaultUrl):
+
+def getHtml(url=defaultUrl):
     '''headers = {"Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
             Accept-Encoding:gzip, deflate, sdch
             Accept-Language:zh-CN,zh;q=0.8
@@ -21,24 +22,26 @@ def getHtml(url = defaultUrl):
             Upgrade-Insecure-Requests:1
             User-Agent:Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36)"}
             '''
-    headers ={"User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36)"}
-    req = urllib2.Request(url = url, headers = headers)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36)"}
+    req = urllib2.Request(url=url, headers=headers)
     data = urllib2.urlopen(req)
     return data.read()
 
-def getProxy(url = defaultUrl):
+
+def getProxy(url=defaultUrl):
     try:
         f = open("IPInfo.txt", 'rb')
         IPFile = json.loads(f.read())
         if time.time() - IPFile['time'] < 180 and IPFile['IPList']:
             print '----ip list don\'t need update----'
-            return IPFile['IPList'] 
+            return IPFile['IPList']
     except:
         print 'failed to open IPInfo.txt'
     finally:
         f.close()
 
-    #IPList is out-of-date, update it
+    # IPList is out-of-date, update it
     print '----update ip list-------'
     IPList = []
     try:
@@ -47,9 +50,9 @@ def getProxy(url = defaultUrl):
         print 'urlopen error:%s' % (url)
     reg = r'<tr class="odd">[\s\S]*?<td>(\d+?\.\d+?\.\d+?\.\d+?)</td>[\s\S]*?<td>(.+?)</td>'
     regcompl = re.compile(reg)
-    result= re.findall(regcompl, data)
+    result = re.findall(regcompl, data)
     for IP, port in result:
-        newIP = str(IP) + ':' +str(port) 
+        newIP = str(IP) + ':' + str(port)
         IPList.append(newIP)
     try:
         saveIP(IPList)
@@ -57,7 +60,8 @@ def getProxy(url = defaultUrl):
         print 'failed to save ip to IPIndo.txt'
     return IPList
 
-def saveIP(IPList = ['127.0.0.0:80']):
+
+def saveIP(IPList=['127.0.0.0:80']):
     if not IPList:
         getProxy()
     fileDict = {}
@@ -72,9 +76,10 @@ def saveIP(IPList = ['127.0.0.0:80']):
         f.close()
     print 'time:', time.localtime()
 
+
 def main():
     getProxy()
 if __name__ == "__main__":
-    #getProxy()
-    #saveIP()
+    # getProxy()
+    # saveIP()
     main()
