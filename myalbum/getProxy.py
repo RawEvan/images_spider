@@ -1,27 +1,56 @@
 #!/usr/bin/python
-#-*-coding:utf-8-*-
+# -*-coding:utf-8-*-
 
-from HTMLParser import HTMLParser
 import urllib2
 import urllib
 import re
 import json
-import pdb
 import time
+import sys
+import logging
+from random import choice
+from HTMLParser import HTMLParser
 
-defaultUrl = 'http://www.xicidaili.com'
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
-def getHtml(url=defaultUrl):
-    '''headers = {"Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-            Accept-Encoding:gzip, deflate, sdch
-            Accept-Language:zh-CN,zh;q=0.8
-            Cache-Control:max-age=0
-            Connection:keep-alive
-            Host:www.xicidaili.com
-            Upgrade-Insecure-Requests:1
-            User-Agent:Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36)"}
-            '''
+DEFAULT_URL = 'http://www.xicidaili.com'
+LOG_FILE = 'proxy.log'
+
+def IPQueryHTML(ip):
+    proxyDict = {'http': ip}
+    opener = urllib2.build_opener(urllib2.ProxyHandler(proxyDict))
+    urllib2.install_opener(opener)
+    url = 'http://www.baidu.com/s?ie=UTF-8&wd=ip'
+    header = {'Accept-Charset': 'GBK,utf-8;q=0.7,*;q=0.3',
+              'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.16 (KHTML, like Gecko) Chrome/10.0.648.151 Safari/534.16'}
+    req = urllib2.Request(url, headers=header)
+    data = urllib2.urlopen(req, None, 9).read()
+    return data
+
+
+def testProxy():
+    IPList = getProxy.getProxy()
+    data = ''
+    while len(IPList) > 0:
+        ip = choice(IPList)
+        try:
+            data = IPQueryHTML(ip)
+            break
+        except:
+            IPList.remove(ip)
+        print 'ip:%s, proxy error, try another ip' % (ip)
+    getProxy.saveIP(IPList)
+    restr = r'gap-right.+?(\d+?\.\d+?\.\d+?\.\d+?)</span>'
+    reg = re.compile(restr)
+    result = re.findall(reg, data)
+    print result
+    if ip.split(':')[0] == result[0]:
+        print 'proxy ok'
+
+
+def getHtml(url=DEFAULT_URL):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36)"}
     req = urllib2.Request(url=url, headers=headers)
@@ -29,7 +58,7 @@ def getHtml(url=defaultUrl):
     return data.read()
 
 
-def getProxy(url=defaultUrl):
+def getProxy(url=DEFAULT_URL):
     try:
         f = open("IPInfo.txt", 'rb')
         IPFile = json.loads(f.read())
@@ -79,6 +108,7 @@ def saveIP(IPList=['127.0.0.0:80']):
 
 def main():
     getProxy()
+
 if __name__ == "__main__":
     # getProxy()
     # saveIP()

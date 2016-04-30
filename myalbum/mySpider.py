@@ -20,7 +20,8 @@ defaultUrl = r'http://www.tuchong.com'
 
 
 class urlInfo():
-    # store the info of image
+    
+    """ Store the info of image. """
 
     def __init__(self, href=defaultUrl, src='', description=r'no description'):
         self.href = href
@@ -33,7 +34,7 @@ class urlInfo():
 
 def getImg(url=defaultUrl):
     '''
-    this is the main function
+    This is the main function
     input  : url to be parsed
     output : a list of dictions which contains the infomation of images found
              in the html
@@ -123,12 +124,6 @@ def getHtml(url=defaultUrl):
 
 
 def dealwithHref(urlInfoList, url):
-    '''
-    if urlInfoList == []:   # if there is no image found
-        temp = urlInfo()    # why it says 'the urlInfo referenced before assignment'
-                            # but this can work in function getImg() below
-        urlInfoList.append(temp)
-    '''
     for urlInfo in urlInfoList:
         # specially for localhost, change './xxx' to '/../xxx'
         if urlInfo.src[0] == r'.':
@@ -173,7 +168,6 @@ def changeClassListToDictList(urlInfoList):
                    {'src': xxx, 'href': xxx, 'description': xxx}]
     '''
     urlDictList = []
-    #urlTemp = {}
 
     for eachUrlInfo in urlInfoList:
         urlTemp = {}
@@ -185,7 +179,6 @@ def changeClassListToDictList(urlInfoList):
     return urlDictList
 
 if __name__ == "__main__":
-    # test
     htmlFile = ('/local/html/file')
     f = open(htmlFile, 'r')     # local html
     htmlFile = f.read()
