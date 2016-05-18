@@ -21,21 +21,16 @@ def myalbum(request, url=defaultUrl):
         if form.is_valid():
             site = form.cleaned_data['site']
             photo_list = getUrl.getImgList(site)
-            return render(request, u'myalbum/myalbum.html', {'form': form,
-                                                             'photo_list': photo_list,
-                                                             'site': site})
         else:   # when POST is invalid
             form = siteForm()
             site = defaultUrl
             photo_list = getUrl.getImgList(site)
-            return render(request, u'myalbum/myalbum.html', {'form': form,
-                                                             'photo_list': photo_list,
-                                                             'site': site})
 
-    else:       # when not POST , just by /url/(.+?)
+    else:       # when not POST , just get url by '/url/(.+?)'
         form = siteForm()
         site = url
         photo_list = getUrl.getImgList(site)
+    site = mySpider.urlClean(site)
     return render(request, u'myalbum/myalbum.html', {'form': form,
                                                      'photo_list': photo_list,
                                                      'site': site})
