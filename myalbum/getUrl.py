@@ -21,4 +21,5 @@ def getImgList(url):
         urlDictList = [{'href': 'evandjango.sinaapp.com',
                         'src': '/static/images/noImage.jpg',
                         'description': 'no description'}]
-    return urlDictList
+    fixed_site = mySpider.urlClean(url)
+    return fixed_site, urlDictList
